@@ -11,10 +11,10 @@ function App() {
     <main className='flex flex-col'>
 
         <Routes>
-          <Route path="/app/" element={<Dashboard />} />
-          <Route path="/app/teamOverview/:teamId" element={<TeamOverview />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/teamOverview/:teamId" element={<TeamOverview />} />
           {/* Fallback for 404 Not Found pages */}
-          <Route path="/app/*" element={<h1>404 - Page Not Found</h1>} />
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
     </main>
     </div>

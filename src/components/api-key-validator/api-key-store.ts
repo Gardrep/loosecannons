@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 // 1. Create the store hook
-export const useAPIKey = create((set: any) => ({
+export const useAPIKey = create(() => ({
   apiKey: "",
 }))
 

@@ -47,9 +47,7 @@ export const ApiKeyValidator = () => {
 
     try {
       const response = await getApiKeyInfo(apiKey);
-      console.log("response.info", response.info)
-      console.log("response.info.access.level > 2", response.info.access.level > 2)
-      if (response.info && response.info.access.level > 2) {
+      if (response.info) {
         setStatus({
           type: 'success',
           message: 'API Key is valid!',

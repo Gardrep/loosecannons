@@ -147,7 +147,7 @@ const TeamOverview = () => {
     }, []);
 
     useAPIKey.subscribe(
-        (state: any) => {
+        () => {
             if (!specificTeamData) {
                 fetchSpecificTeamData();
             }

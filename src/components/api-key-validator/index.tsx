@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './ApiKeyValidator.css';
 import getApiKeyInfo from '../../api_torn_service/get-api-key-info';
 import useAPIKey from './api-key-store';
@@ -10,7 +10,7 @@ interface StatusState {
   message: string;
 }
 
-export const ApiKeyValidator: React.FC = () => {
+export const ApiKeyValidator = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
 

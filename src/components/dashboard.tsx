@@ -24,7 +24,7 @@ const Dashboard = () => {
   }, []);
 
   useAPIKey.subscribe(
-    (state: any) => {
+    () => {
       if (!allTeamsData) {
         fetchAllTeamsData();
       }

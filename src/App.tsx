@@ -5,19 +5,19 @@ import TeamOverview from './components/team-overview/team-overview'
 import ApiKeyValidator from './components/api-key-validator'
 
 function App() {
-  return (<div >
-  
-            <ApiKeyValidator></ApiKeyValidator>
-    <main className='flex flex-col'>
+  return (<div className='bg-slate-900'>
 
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/teamOverview/:teamId" element={<TeamOverview />} />
-          {/* Fallback for 404 Not Found pages */}
-          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
-        </Routes>
+    <ApiKeyValidator></ApiKeyValidator>
+    <main className='flex flex-col bg-slate-900'>
+
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/teamOverview/:teamId" element={<TeamOverview />} />
+        {/* Fallback for 404 Not Found pages */}
+        <Route path="*" element={<h1 className='text-white'>404 - Page Not Found</h1>} />
+      </Routes>
     </main>
-    </div>
+  </div>
   )
 }
 

@@ -7,14 +7,12 @@ import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const API_KEY: string = useAPIKey.getState().apiKey;
-  // const isFirstRender = useRef(true);
   const [allTeamsData, setAllTeamsData]: any = useState(null);
 
   const fetchAllTeamsData = useCallback(async () => {
     try {
       const data = await getTeams();
-      if(data.error) throw new Error(data.error.error)
+      if (data?.error) throw new Error(data.error.error)
       setAllTeamsData(data);
     } catch (error) {
       console.error("Failed to fetch:", error);
@@ -22,30 +20,16 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    // if (isFirstRender.current) {
-    //   isFirstRender.current = false;
-    //   return; // Skip the very first intentional mount-unmount cycle
-    // }
-    if (!API_KEY) {
-      console.warn("No ApiKEY")
-      return;
-    }
     fetchAllTeamsData();
-  }, [API_KEY]);
+  }, []);
 
   useAPIKey.subscribe(
-    (state) => {
-      console.log("state", state)
-      if (!state.apiKey) {
-        console.warn("No Api KEY")
-        return;
+    (state: any) => {
+      if (!allTeamsData) {
+        fetchAllTeamsData();
       }
-      fetchAllTeamsData();
     }
   )
-
-
-
 
   // Compute stats using useMemo for performance optimization
   const stats = useMemo(() => {
@@ -99,7 +83,7 @@ const Dashboard = () => {
   };
 
   const handleTeamOverview = (teamId: number) => {
-    navigate(`/app/teamOverview/${teamId}`, { replace: true });
+    navigate(`/teamOverview/${teamId}`, { replace: true });
   }
 
   return (
@@ -149,7 +133,7 @@ const Dashboard = () => {
                 {allTeamsData?.elimination?.map((team: any, index: number) => (<div key={`allTeamsData-elimination-${index}-${team?.id}`}>
                   <div
                     className="grid grid-cols-6 justify-between hover:bg-slate-700/30 transition-colors"
-                    onClick={()=>handleTeamOverview(team?.id)}
+                    onClick={() => handleTeamOverview(team?.id)}
                   >
                     <div className="flex items-center px-6 text-sm font-semibold text-slate-100">#{team?.id}<Logos teamId={team?.id}></Logos></div>
                     <div className="px-6 py-4 text-sm text-slate-100">{team?.participants.toLocaleString()}</div>

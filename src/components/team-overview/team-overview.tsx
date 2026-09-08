@@ -130,15 +130,12 @@ const getStateBadgeClasses = (state: string) => {
 
 const TeamOverview = () => {
     const { teamId } = useParams();
-    const API_KEY: string = useAPIKey.getState().apiKey;
-
-    //   const isFirstRender = useRef(true);
     const [specificTeamData, setSpecificTeamData]: any = useState(defaultData);
 
     const fetchSpecificTeamData = useCallback(async () => {
         try {
             const data = await getSpecificTeam(parseInt(teamId as string))
-            if(data.error) throw new Error(data.error.erro)
+            if (data?.error) throw new Error(data.error.error)
             setSpecificTeamData(data);
         } catch (error) {
             console.error("Failed to fetch:", error);
@@ -146,24 +143,14 @@ const TeamOverview = () => {
     }, []);
 
     useEffect(() => {
-        // if (isFirstRender.current) {
-        //   isFirstRender.current = false;
-        //   return; // Skip the very first intentional mount-unmount cycle
-        // }
-        if (!API_KEY) {
-            console.warn("No ApiKEY")
-            return;
-        }
         fetchSpecificTeamData();
-    }, [API_KEY]);
+    }, []);
 
     useAPIKey.subscribe(
-        (state) => {
-            if (!state.apiKey) {
-                console.warn("No ApiKEY")
-                return;
+        (state: any) => {
+            if (!specificTeamData) {
+                fetchSpecificTeamData();
             }
-            fetchSpecificTeamData();
         }
     )
 

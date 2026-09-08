@@ -1,7 +1,7 @@
 import useAPIKey from "../components/api-key-validator/api-key-store";
 
 export default async function getSpecificTeam(teamId: number) {
-  const API_KEY: string = useAPIKey.getState().apiKey;
+  const API_KEY: string = useAPIKey.getState().getApiKey()
   const url = `https://api.torn.com/v2/torn/${teamId}/eliminationteam?limit=100&key=${API_KEY}`;
   
   const options = {

@@ -1,4 +1,5 @@
 export default async function getApiKeyInfo(API_KEY: string) {
+  console.log("getApiKeyInfo=>")
   const url = `https://api.torn.com/v2/key/info?key=${API_KEY}`;
   
   const options = {

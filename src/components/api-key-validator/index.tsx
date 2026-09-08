@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './ApiKeyValidator.css';
 import getApiKeyInfo from '../../api_torn_service/get-api-key-info';
 import useAPIKey from './api-key-store';
@@ -13,10 +13,25 @@ interface StatusState {
 export const ApiKeyValidator: React.FC = () => {
   const [apiKey, setApiKey] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
-  const [status, setStatus] = useState<StatusState>({
-    type: null,
-    message: '',
-  });
+
+  const findInitalState = (): StatusState => {
+    console.log("findInitalState=>")
+    const API_KEY: string = useAPIKey.getState().getApiKey();
+
+    if (!API_KEY) {
+      return {
+        type: null,
+        message: '',
+      }
+    } else {
+      return {
+          type: 'success',
+          message: 'API Key is valid!',
+        }
+    }
+  }
+
+  const [status, setStatus] = useState<StatusState>(findInitalState());
 
   const handleValidate = async (): Promise<void> => {
     if (!apiKey.trim()) {
@@ -32,12 +47,14 @@ export const ApiKeyValidator: React.FC = () => {
 
     try {
       const response = await getApiKeyInfo(apiKey);
+      console.log("response.info", response.info)
+      console.log("response.info.access.level > 2", response.info.access.level > 2)
       if (response.info && response.info.access.level > 2) {
         setStatus({
           type: 'success',
           message: 'API Key is valid!',
         });
-        useAPIKey.setState({ apiKey: apiKey })
+        useAPIKey.getState().setApiKey(apiKey);
       } else {
         const errorData = await response.json().catch(() => ({}));
         setStatus({
